@@ -1,3 +1,11 @@
+function ZeigeZiffer (num: number, pos: number) {
+    numTemp = num
+    if (numTemp > 5) {
+        led.plot(pos, 0)
+        numTemp += -5
+    }
+    led.plot(pos, numTemp)
+}
 input.onButtonPressed(Button.A, function () {
     if (statusNr == 0) {
         t += 1 * 600
@@ -24,16 +32,15 @@ input.onButtonPressed(Button.B, function () {
 })
 function ZeigeTimer (tIn: number) {
     basic.clearScreen()
-    tTemp = tIn % 10
-    if (tTemp > 5) {
-        led.plot(4, 0)
-        tTemp += -5
-    }
-    led.plot(4, 5 - tTemp)
+    tTemp = tIn
+    tTemp2 = tTemp % 10
+    ZeigeZiffer(tTemp2, 4)
     tTemp = (tIn - tTemp) / 10 % 6
-    led.plot(3, 5 - tTemp)
+    ZeigeZiffer(tTemp, 3)
 }
+let tTemp2 = 0
 let tTemp = 0
+let numTemp = 0
 let ton = false
 let statusTxtList: string[] = []
 let statusNr = 0
