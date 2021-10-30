@@ -6,6 +6,22 @@ function ZeigeZiffer (num: number, pos: number) {
     }
     led.plot(pos, 5 - numTemp)
 }
+input.onPinPressed(TouchPin.P0, function () {
+    statusNr += -1
+    if (statusNr < 2) {
+        for (let index = 0; index < 4; index++) {
+            led.toggle(statusNr, 0)
+            basic.pause(100)
+        }
+    } else if (statusNr < 4) {
+        for (let index = 0; index < 4; index++) {
+            led.toggle(statusNr + 1, 0)
+            basic.pause(100)
+        }
+    } else {
+        basic.showString("" + (statusTxtList[statusNr]))
+    }
+})
 input.onButtonPressed(Button.A, function () {
     if (statusNr == 0) {
         t += 1 * 600
@@ -28,7 +44,19 @@ input.onButtonPressed(Button.A, function () {
 })
 input.onButtonPressed(Button.B, function () {
     statusNr += 1
-    basic.showString("" + (statusTxtList[statusNr]))
+    if (statusNr < 2) {
+        for (let index = 0; index < 4; index++) {
+            led.toggle(statusNr, 0)
+            basic.pause(100)
+        }
+    } else if (statusNr < 4) {
+        for (let index = 0; index < 4; index++) {
+            led.toggle(statusNr + 1, 0)
+            basic.pause(100)
+        }
+    } else {
+        basic.showString("" + (statusTxtList[statusNr]))
+    }
 })
 function ZeigeTimer (tIn: number) {
     basic.clearScreen()
@@ -57,6 +85,7 @@ statusNr = 0
 statusTxtList = ["setze10Min", "setzeMin", "setze10Sek", "setzeSek", "setzeTon", "laufe", "abgelaufene"]
 ton = false
 basic.clearScreen()
+ZeigeTimer(t)
 basic.forever(function () {
 	
 })
