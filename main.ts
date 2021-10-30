@@ -22,9 +22,18 @@ input.onButtonPressed(Button.B, function () {
     statusNr += 1
     basic.showString("" + (statusTxtList[statusNr]))
 })
-function ZeigeTimer (t0: number) {
-    basic.showString(convertToText(t0))
+function ZeigeTimer (tIn: number) {
+    basic.clearScreen()
+    tTemp = tIn % 10
+    if (tTemp > 5) {
+        led.plot(4, 0)
+        tTemp += -5
+    }
+    led.plot(4, 5 - tTemp)
+    tTemp = (tIn - tTemp) / 10 % 6
+    led.plot(3, 5 - tTemp)
 }
+let tTemp = 0
 let ton = false
 let statusTxtList: string[] = []
 let statusNr = 0
