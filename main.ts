@@ -6,22 +6,6 @@ function ZeigeZiffer (num: number, pos: number) {
     }
     led.plot(pos, 5 - numTemp)
 }
-input.onPinPressed(TouchPin.P0, function () {
-    statusNr += -1
-    if (statusNr < 2) {
-        for (let index = 0; index < 4; index++) {
-            led.toggle(statusNr, 0)
-            basic.pause(100)
-        }
-    } else if (statusNr < 4) {
-        for (let index = 0; index < 4; index++) {
-            led.toggle(statusNr + 1, 0)
-            basic.pause(100)
-        }
-    } else {
-        basic.showString("" + (statusTxtList[statusNr]))
-    }
-})
 input.onButtonPressed(Button.A, function () {
     if (statusNr == 0) {
         t += 1 * 600
@@ -37,13 +21,22 @@ input.onButtonPressed(Button.A, function () {
         ZeigeTimer(t)
     } else if (statusNr == 4) {
         ton = !(ton)
-        basic.showString(convertToText(ton))
+        if (ton == true) {
+            basic.showString("an")
+        } else {
+            basic.showString("aus")
+        }
+    } else if (statusNr == 5) {
+        showTimer = !(showTimer)
     } else {
     	
     }
 })
 input.onButtonPressed(Button.B, function () {
     statusNr += 1
+    if (statusNr == 0) {
+        ZeigeTimer(t)
+    }
     if (statusNr < 2) {
         for (let index = 0; index < 4; index++) {
             led.toggle(statusNr, 0)
@@ -54,8 +47,13 @@ input.onButtonPressed(Button.B, function () {
             led.toggle(statusNr + 1, 0)
             basic.pause(100)
         }
+    } else if (statusNr == 4) {
+        basic.showString("Ton:")
+    } else if (statusNr == 5) {
+        ZeigeTimer(t)
+        tLast = t
     } else {
-        basic.showString("" + (statusTxtList[statusNr]))
+    	
     }
 })
 function ZeigeTimer (tIn: number) {
@@ -75,17 +73,43 @@ function ZeigeTimer (tIn: number) {
 }
 let tTemp2 = 0
 let tTemp = 0
+let tLast = 0
 let numTemp = 0
+let showTimer = false
 let ton = false
-let statusTxtList: string[] = []
 let statusNr = 0
 let t = 0
 t = 10
 statusNr = 0
-statusTxtList = ["setze10Min", "setzeMin", "setze10Sek", "setzeSek", "setzeTon", "laufe", "abgelaufene"]
+let statusTxtList = ["setze10Min", "setzeMin", "setze10Sek", "setzeSek", "setzeTon", "laufe", "abgelaufene"]
 ton = false
+showTimer = true
 basic.clearScreen()
 ZeigeTimer(t)
+for (let index = 0; index < 4; index++) {
+    led.toggle(0, 0)
+    basic.pause(100)
+}
 basic.forever(function () {
-	
+    if (statusNr == 5) {
+        basic.clearScreen()
+        basic.setLedColor(0xff0000)
+        if (showTimer == true) {
+            ZeigeTimer(t)
+        }
+        basic.pause(1000)
+        t += -1
+        if (t == 0) {
+            statusNr += 1
+        }
+    }
+    if (statusNr == 6) {
+        basic.setLedColor(0x00ff00)
+        basic.showIcon(IconNames.No)
+        if (ton == true) {
+            music.playMelody("- E C E - F D F ", 240)
+        }
+        statusNr = -1
+        t = tLast
+    }
 })
