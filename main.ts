@@ -6,6 +6,12 @@ input.onButtonPressed(Button.A, function () {
     } else if (statusNr == 1) {
         t += 1 * 60
         ZeigeTimer(t)
+    } else if (statusNr == 2) {
+        t += 1 * 10
+        ZeigeTimer(t)
+    } else if (statusNr == 3) {
+        t += 1 * 1
+        ZeigeTimer(t)
     } else {
     	
     }
@@ -19,6 +25,7 @@ let t = 0
 t = 10
 statusNr = 0
 statusTxtList = ["setze10Min", "setzeMin", "setze10Sek", "setzeSek", "setzeTon", "laufe", "abgelaufene"]
+let ton = false
 basic.clearScreen()
 basic.forever(function () {
 	
