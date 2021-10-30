@@ -4,7 +4,7 @@ function ZeigeZiffer (num: number, pos: number) {
         led.plot(pos, 0)
         numTemp += -5
     }
-    led.plot(pos, numTemp)
+    led.plot(pos, 5 - numTemp)
 }
 input.onButtonPressed(Button.A, function () {
     if (statusNr == 0) {
@@ -35,8 +35,15 @@ function ZeigeTimer (tIn: number) {
     tTemp = tIn
     tTemp2 = tTemp % 10
     ZeigeZiffer(tTemp2, 4)
-    tTemp = (tIn - tTemp) / 10 % 6
-    ZeigeZiffer(tTemp, 3)
+    tTemp = (tTemp - tTemp2) / 10
+    tTemp2 = tTemp % 6
+    ZeigeZiffer(tTemp2, 3)
+    tTemp = (tTemp - tTemp2) / 6
+    tTemp2 = tTemp % 10
+    ZeigeZiffer(tTemp2, 1)
+    tTemp = (tTemp - tTemp2) / 10
+    tTemp2 = tTemp % 6
+    ZeigeZiffer(tTemp2, 0)
 }
 let tTemp2 = 0
 let tTemp = 0
