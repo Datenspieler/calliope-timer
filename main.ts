@@ -9,15 +9,19 @@ function ZeigeZiffer (num: number, pos: number) {
 input.onButtonPressed(Button.A, function () {
     if (statusNr == 0) {
         t += 1 * 600
+        t = t % 5400
         ZeigeTimer(t)
     } else if (statusNr == 1) {
         t += 1 * 60
+        t = t % 600
         ZeigeTimer(t)
     } else if (statusNr == 2) {
         t += 1 * 10
+        t = t % 60
         ZeigeTimer(t)
     } else if (statusNr == 3) {
         t += 1 * 1
+        t = t % 10
         ZeigeTimer(t)
     } else if (statusNr == 4) {
         ton = !(ton)
@@ -68,7 +72,7 @@ function ZeigeTimer (tIn: number) {
     tTemp2 = tTemp % 10
     ZeigeZiffer(tTemp2, 1)
     tTemp = (tTemp - tTemp2) / 10
-    tTemp2 = tTemp % 6
+    tTemp2 = tTemp % 10
     ZeigeZiffer(tTemp2, 0)
 }
 let tTemp2 = 0
