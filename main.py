@@ -77,7 +77,7 @@ showTimer = False
 ton = False
 statusNr = 0
 t = 0
-t = 10
+t = 0
 statusNr = 0
 statusTxtList = ["setze10Min",
     "setzeMin",
@@ -109,7 +109,9 @@ def on_forever():
         basic.set_led_color(0x00ff00)
         basic.show_icon(IconNames.NO)
         if ton == True:
-            music.play_melody("- E C E - F D F ", 240)
+            for index4 in range(4):
+                music.play_tone(523, music.beat(BeatFraction.WHOLE))
+                basic.pause(100)
         statusNr = -1
         t = tLast
 basic.forever(on_forever)
