@@ -79,7 +79,7 @@ let showTimer = false
 let ton = false
 let statusNr = 0
 let t = 0
-t = 10
+t = 0
 statusNr = 0
 let statusTxtList = ["setze10Min", "setzeMin", "setze10Sek", "setzeSek", "setzeTon", "laufe", "abgelaufene"]
 ton = false
@@ -107,7 +107,10 @@ basic.forever(function () {
         basic.setLedColor(0x00ff00)
         basic.showIcon(IconNames.No)
         if (ton == true) {
-            music.playMelody("- E C E - F D F ", 240)
+            for (let index = 0; index < 4; index++) {
+                music.playTone(523, music.beat(BeatFraction.Whole))
+                basic.pause(100)
+            }
         }
         statusNr = -1
         t = tLast
